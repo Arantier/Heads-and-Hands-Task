@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="email_padding_top">24dp</dimen>
+    <dimen name="input_fields_padding_inbetween">20dp</dimen>
+    <dimen name="login_button_padding_top">24dp</dimen>
+    <dimen name="login_button_padding_bottom">18dp</dimen>
+    <dimen name="login_elements_margin_horizontal">32dp</dimen>
+</resources>
