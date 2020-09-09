@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="background">@color/colorPrimary</item>
@@ -8,7 +8,7 @@
         <item name="toolbarStyle">@style/ToolbarStyle</item>
     </style>
 
-    <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="elevation">@dimen/toolbar_shadow_elevation</item>
         <item name="titleMarginStart">@dimen/toolbar_title_margin_left</item>
@@ -36,8 +36,8 @@
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="InputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/color_input</item>
+<!--    TODO: Come up with implementation for outdated versions of android-->
+    <style name="InputStyle" parent="Widget.Design.TextInputLayout">
         <item name="hintTextColor">@color/color_input</item>
         <item name="android:textColorHighlight">@color/inputActive</item>
         <item name="android:theme">@style/HandleTheme</item>

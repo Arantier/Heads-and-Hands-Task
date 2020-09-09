@@ -53,40 +53,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textCursorDrawable="@null"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textCursorDrawable="@null" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    TODO: change dot appearance-->
+    <!--  TODO: change dot appearance-->
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/InputStyle"
         android:id="@+id/editTextPassword"
+        style="@style/InputStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/login_elements_margin_horizontal"
         android:layout_marginTop="@dimen/input_fields_padding_inbetween"
         android:hint="@string/title_password_placeholder"
-        app:hintTextAppearance="?attr/textAppearanceCaption"
-        app:errorEnabled="true"
-        app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_question"
+        app:endIconMode="custom"
         app:endIconTint="#00000000"
         app:endIconTintMode="src_atop"
-        app:endIconContentDescription="No predefined behavior"
+        app:errorEnabled="true"
+        app:hintTextAppearance="?attr/textAppearanceCaption"
         app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail" >
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmail">
 
         <com.google.android.material.textfield.TextInputEditText
             style="@style/InputStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:inputType="textPassword"
             android:letterSpacing="0.5"
-            android:textCursorDrawable="@null"
-            android:inputType="textPassword" />
+            android:textCursorDrawable="@null" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

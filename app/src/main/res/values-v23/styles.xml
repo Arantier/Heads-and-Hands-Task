@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="BaseAppTheme">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="background">@color/colorPrimary</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="InputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/color_input</item>
+        <item name="hintTextColor">@color/color_input</item>
+        <item name="android:textColorHighlight">@color/inputActive</item>
+        <item name="android:theme">@style/HandleTheme</item>
     </style>
 </resources>
