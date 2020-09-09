@@ -7,7 +7,6 @@
     <dimen name="button_corner_radius">4dp</dimen>
     <dimen name="button_text_size">14sp</dimen>
     <dimen name="button_height">42dp</dimen>
-    <dimen name="button_letter_spacing">0.04</dimen>
 
     <dimen name="email_padding_top">24dp</dimen>
     <dimen name="input_fields_padding_inbetween">20dp</dimen>

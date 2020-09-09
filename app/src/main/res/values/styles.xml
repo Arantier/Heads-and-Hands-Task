@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="background">@color/colorPrimary</item>
@@ -20,18 +20,20 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/bkg_button</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:letterSpacing">@dimen/button_letter_spacing</item>
         <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="ButtonStyle.Light" parent="ButtonStyle">
+    <style name="ButtonStyle.Light" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/bkg_button_light</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="InputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
