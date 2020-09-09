@@ -39,6 +39,12 @@
     <style name="InputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/color_input</item>
         <item name="hintTextColor">@color/color_input</item>
+        <item name="android:textColorHighlight">@color/inputActive</item>
+        <item name="android:theme">@style/HandleTheme</item>
+    </style>
+
+    <style name="HandleTheme">
+        <item name="colorControlActivated">@color/inputActive</item>
     </style>
 
 </resources>
