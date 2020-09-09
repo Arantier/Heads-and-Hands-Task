@@ -23,4 +23,11 @@
     <dimen name="create_button_margin_right">16dp</dimen>
     <dimen name="create_button_text_size">15sp</dimen>
 
+    <dimen name="password_hint_initial_coordinateY">-32dp</dimen>
+    <dimen name="password_hint_height">128dp</dimen>
+    <dimen name="password_hint_corner_radius">16dp</dimen>
+    <dimen name="password_hint_margin_horizontal">16dp</dimen>
+    <dimen name="password_hint_padding_horizontal">16dp</dimen>
+    <dimen name="password_hint_padding_vertical">8dp</dimen>
+
 </resources>

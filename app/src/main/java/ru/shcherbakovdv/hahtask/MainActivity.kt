@@ -1,21 +1,18 @@
 package ru.shcherbakovdv.hahtask
 
-import androidx.appcompat.app.AppCompatActivity
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
-import androidx.core.view.isEmpty
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.random.Random
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,8 +58,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 isErrorEnabled = !it
             }
-            setEndIconOnClickListener {
 
+            setEndIconOnClickListener {
+                textPasswordHint.apply {
+                    animate()
+                        .setStartDelay(0)
+                        .translationY(toolbar.height.toFloat())
+                        .withEndAction {
+                            animate()
+                                .setStartDelay(3000)
+                                .translationY(resources.getDimension(R.dimen.password_hint_initial_coordinateY))
+                        }
+                }
             }
         }
 

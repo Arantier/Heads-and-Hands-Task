@@ -7,6 +7,26 @@
     android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textPasswordHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:translationY="@dimen/password_hint_initial_coordinateY"
+        android:layout_marginStart="@dimen/password_hint_margin_horizontal"
+        android:layout_marginEnd="@dimen/password_hint_margin_horizontal"
+        android:background="@drawable/bkg_password_hint"
+        android:elevation="@dimen/toolbar_shadow_elevation"
+        android:paddingStart="@dimen/password_hint_padding_horizontal"
+        android:paddingTop="@dimen/password_hint_padding_vertical"
+        android:paddingEnd="@dimen/password_hint_padding_horizontal"
+        android:paddingBottom="@dimen/password_hint_padding_vertical"
+        android:text="@string/msg_password_hint"
+        android:textAlignment="center"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -33,8 +53,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/InputStyle"
         android:id="@+id/editTextEmail"
+        style="@style/InputStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/login_elements_margin_horizontal"
@@ -58,7 +78,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--  TODO: change dot appearance-->
+    <!--  TODO: change dot appearance... But should I?-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextPassword"
         style="@style/InputStyle"
