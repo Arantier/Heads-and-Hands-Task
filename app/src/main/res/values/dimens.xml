@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_shadow_elevation">4dp</dimen>
+    <dimen name="toolbar_title_margin_left">32dp</dimen>
+
+    <dimen name="button_corner_radius">4dp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="button_height">42dp</dimen>
+    <dimen name="button_letter_spacing">0.04</dimen>
+
     <dimen name="email_padding_top">24dp</dimen>
     <dimen name="input_fields_padding_inbetween">20dp</dimen>
+    <dimen name="input_fields_stroke_width">1dp</dimen>
+    <dimen name="input_fields_padding_left">16dp</dimen>
+    <dimen name="input_fields_padding_top">18dp</dimen>
+    <dimen name="input_fields_padding_bottom">14dp</dimen>
+    <dimen name="input_corner_radius">4dp</dimen>
+    <dimen name="input_text_size">16sp</dimen>
+
     <dimen name="login_button_padding_top">24dp</dimen>
     <dimen name="login_button_padding_bottom">18dp</dimen>
     <dimen name="login_elements_margin_horizontal">32dp</dimen>
+    <dimen name="create_button_margin_right">16dp</dimen>
+    <dimen name="create_button_text_size">15sp</dimen>
+
 </resources>
