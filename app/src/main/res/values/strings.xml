@@ -5,5 +5,8 @@
     <string name="title_password_placeholder">Пароль</string>
     <string name="title_login_button">Войти</string>
     <string name="title_button_create">Создать</string>
-
+    <string name="msg_incorrect_email">Некорректный адрес электронной почты!</string>
+    <string name="msg_incorrect_password">Некорректный пароль!</string>
+    <string name="msg_password_hint">Пароль должен содержать: как минимум одну строчную и
+        прописную буквы, одну цифру и должен состоять минимум из 6 символов</string>
 </resources>
