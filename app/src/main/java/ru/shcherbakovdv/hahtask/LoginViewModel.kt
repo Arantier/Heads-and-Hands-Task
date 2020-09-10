@@ -1,6 +1,7 @@
 package ru.shcherbakovdv.hahtask
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {
 
@@ -30,22 +31,29 @@ class LoginViewModel : ViewModel() {
                 && password.length >= 6
                 && password.contains("""\d""".toRegex())
 
-    fun checkCredentials() {
+    fun signIn() {
         isEmailCorrect.value = isCorrectEmail(userEmail.value ?: "")
         isPasswordCorrect.value = isCorrectPassword(userPassword.value ?: "")
-        if (mode == SIGN_IN) {
-            if (isEmailCorrect.value == true && isPasswordCorrect.value == true) {
-                TODO()
-            }
-        } else if (mode == SIGN_UP) {
-            isRepeatPasswordCorrect.value = userPassword.value.equals(userRepeatPassword.value)
-                    && !userRepeatPassword.value.isNullOrBlank()
-            if (isEmailCorrect.value == true
-                && isPasswordCorrect.value == true
-                && isRepeatPasswordCorrect.value == true
-            ) {
-                TODO()
-            }
+        if (isEmailCorrect.value == true && isPasswordCorrect.value == true) {
+            TODO()
+        }
+        if (isEmailCorrect.value == true
+            && isPasswordCorrect.value == true
+        ) {
+            TODO()
+        }
+    }
+
+    fun signUp() {
+        isEmailCorrect.value = isCorrectEmail(userEmail.value ?: "")
+        isPasswordCorrect.value = isCorrectPassword(userPassword.value ?: "")
+        isRepeatPasswordCorrect.value = userPassword.value.equals(userRepeatPassword.value)
+                && !userRepeatPassword.value.isNullOrBlank()
+        if (isEmailCorrect.value == true
+            && isPasswordCorrect.value == true
+            && isRepeatPasswordCorrect.value == true
+        ) {
+            TODO()
         }
     }
 

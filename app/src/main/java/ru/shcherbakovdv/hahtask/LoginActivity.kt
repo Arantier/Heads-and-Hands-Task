@@ -2,7 +2,6 @@ package ru.shcherbakovdv.hahtask
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationSet
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.marginTop
@@ -34,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin.text = getString(R.string.title_button_create)
         editTextRepeatPassword.apply {
             visibility = View.VISIBLE
-            animate().translationYBy(repeatPasswordTransition)
+            animate().translationY(repeatPasswordTransition)
                 .withStartAction {
-                    buttonLogin.animate().translationYBy(repeatPasswordTransition)
+                    buttonLogin.animate().translationY(repeatPasswordTransition)
                 }
         }
     }
@@ -45,9 +44,9 @@ class LoginActivity : AppCompatActivity() {
         buttonCreate.text = getString(R.string.title_button_create)
         buttonLogin.text = getString(R.string.title_button_login)
         editTextRepeatPassword.apply {
-            animate().translationYBy(-repeatPasswordTransition)
+            animate().translationY(0f)
                 .withStartAction {
-                    buttonLogin.animate().translationYBy(-repeatPasswordTransition)
+                    buttonLogin.animate().translationY(0f)
                 }
                 .withEndAction { visibility = View.GONE }
         }
@@ -129,7 +128,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         buttonLogin.setOnClickListener {
-            viewModel.checkCredentials()
+            if (viewModel.mode == LoginViewModel.SIGN_IN) {
+                viewModel.signIn()
+            } else {
+                viewModel.signUp()
+            }
         }
     }
 }
