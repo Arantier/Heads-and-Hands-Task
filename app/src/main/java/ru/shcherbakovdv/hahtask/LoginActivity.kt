@@ -1,11 +1,11 @@
 package ru.shcherbakovdv.hahtask
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationSet
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.core.widget.doOnTextChanged
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
@@ -14,9 +14,10 @@ import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
+    var repeatPasswordTransition = 0f
 
     private fun shakeView(view: View) {
         SpringAnimation(view, DynamicAnimation.TRANSLATION_X, 0f).apply {
@@ -28,16 +29,44 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
+    private fun showRepeatPassword() {
+        buttonCreate.text = getString(R.string.title_button_login)
+        buttonLogin.text = getString(R.string.title_button_create)
+        editTextRepeatPassword.apply {
+            visibility = View.VISIBLE
+            animate().translationYBy(repeatPasswordTransition)
+                .withStartAction {
+                    buttonLogin.animate().translationYBy(repeatPasswordTransition)
+                }
+        }
+    }
+
+    private fun hideRepeatPassword() {
+        buttonCreate.text = getString(R.string.title_button_create)
+        buttonLogin.text = getString(R.string.title_button_login)
+        editTextRepeatPassword.apply {
+            animate().translationYBy(-repeatPasswordTransition)
+                .withStartAction {
+                    buttonLogin.animate().translationYBy(-repeatPasswordTransition)
+                }
+                .withEndAction { visibility = View.GONE }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        editTextRepeatPassword.post {
+            repeatPasswordTransition =
+                editTextPassword.measuredHeight + editTextPassword.marginTop + .0f
+        }
 
         editTextEmail.apply {
             editText?.doOnTextChanged { text, _, _, _ ->
                 viewModel.userEmail.value = text.toString()
                 isErrorEnabled = false
             } ?: throw IllegalStateException()
-            viewModel.isEmailCorrect.observe(this@MainActivity) {
+            viewModel.isEmailCorrect.observe(this@LoginActivity) {
                 if (!it) {
                     error = getString(R.string.msg_incorrect_email)
                     shakeView(this)
@@ -51,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.userPassword.value = text.toString()
                 isErrorEnabled = false
             } ?: throw IllegalStateException()
-            viewModel.isPasswordCorrect.observe(this@MainActivity) {
+            viewModel.isPasswordCorrect.observe(this@LoginActivity) {
                 if (!it) {
                     error = getString(R.string.msg_incorrect_password)
                     shakeView(this)
@@ -59,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                 isErrorEnabled = !it
             }
 
+            // Animation of slider with password requirements
             setEndIconOnClickListener {
                 textPasswordHint.apply {
                     animate()
@@ -70,6 +100,31 @@ class MainActivity : AppCompatActivity() {
                                 .translationY(resources.getDimension(R.dimen.password_hint_initial_coordinateY))
                         }
                 }
+            }
+        }
+
+        editTextRepeatPassword.apply {
+            editText?.doOnTextChanged { text, _, _, _ ->
+                viewModel.userRepeatPassword.value = text.toString()
+                isErrorEnabled = false
+            } ?: throw IllegalStateException()
+            viewModel.isRepeatPasswordCorrect.observe(this@LoginActivity) {
+                if (!it) {
+                    error = getString(R.string.msg_passwords_not_match)
+                    shakeView(this)
+                }
+                isErrorEnabled = !it
+            }
+        }
+
+
+        buttonCreate.setOnClickListener {
+            if (viewModel.mode == LoginViewModel.SIGN_IN) {
+                showRepeatPassword()
+                viewModel.mode = LoginViewModel.SIGN_UP
+            } else {
+                hideRepeatPassword()
+                viewModel.mode = LoginViewModel.SIGN_IN
             }
         }
 
