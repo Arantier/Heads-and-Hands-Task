@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
-    var repeatPasswordTransition = 0f
+    private var repeatPasswordTransition = 0f
 
     private fun shakeView(view: View) {
         SpringAnimation(view, DynamicAnimation.TRANSLATION_X, 0f).apply {
@@ -52,12 +52,41 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLabelPopup(message: String, colorId: Int? = null) {
+        labelPopup.apply {
+            text = message
+            colorId?.let(this::setTextColor)
+            animate()
+                .setStartDelay(0)
+                .translationY(toolbar.height.toFloat())
+                .withEndAction {
+                    animate()
+                        .setStartDelay(3000)
+                        .translationY(resources.getDimension(R.dimen.password_hint_initial_coordinateY))
+                        .withEndAction {
+                            text = ""
+                        }
+                }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         editTextRepeatPassword.post {
             repeatPasswordTransition =
                 editTextPassword.measuredHeight + editTextPassword.marginTop + .0f
+        }
+
+        viewModel.labelNotifications.observe(this) {
+            if (it.status == Status.ERROR) {
+                showLabelPopup(
+                    it.data ?: getString(R.string.msg_uknown_error),
+                    resources.getColor(R.color.design_default_color_error)
+                )
+            } else {
+                showLabelPopup(it.data ?: getString(R.string.msg_unexpected_outcome))
+            }
         }
 
         editTextEmail.apply {
@@ -89,16 +118,7 @@ class LoginActivity : AppCompatActivity() {
 
             // Animation of slider with password requirements
             setEndIconOnClickListener {
-                textPasswordHint.apply {
-                    animate()
-                        .setStartDelay(0)
-                        .translationY(toolbar.height.toFloat())
-                        .withEndAction {
-                            animate()
-                                .setStartDelay(3000)
-                                .translationY(resources.getDimension(R.dimen.password_hint_initial_coordinateY))
-                        }
-                }
+                viewModel.labelNotifications.value = Resource.success(getString(R.string.msg_password_hint))
             }
         }
 

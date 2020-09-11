@@ -11,4 +11,6 @@
     <string name="msg_passwords_not_match">Пароли не совпадают!</string>
     <string name="msg_password_hint">Пароль должен содержать: как минимум одну строчную и
         прописную буквы, одну цифру и должен состоять минимум из 6 символов</string>
+    <string name="msg_uknown_error">Неизвестная ошибка!</string>
+    <string name="msg_unexpected_outcome">Если вы видите это, значит наш разработчик где-то накосячил! Обратитесь в поддержку.</string>
 </resources>

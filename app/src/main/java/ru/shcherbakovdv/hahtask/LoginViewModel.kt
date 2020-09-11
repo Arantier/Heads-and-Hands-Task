@@ -6,19 +6,15 @@ import androidx.lifecycle.ViewModel
 class LoginViewModel : ViewModel() {
 
     var mode = SIGN_IN
-    val userEmail: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val userPassword: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-    val userRepeatPassword: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
+    val userEmail: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val userPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    val userRepeatPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
-    val isEmailCorrect: MutableLiveData<Boolean> = MutableLiveData(true)
-    val isPasswordCorrect: MutableLiveData<Boolean> = MutableLiveData(true)
-    val isRepeatPasswordCorrect: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isEmailCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
+    val isPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
+    val isRepeatPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
+
+    val labelNotifications: MutableLiveData<Resource<String>> by lazy { MutableLiveData(Resource.success(""))}
 
     // This is famous expression from https://emailregex.com which should "99.99% works"
     private fun isCorrectEmail(email: String) =
@@ -34,14 +30,17 @@ class LoginViewModel : ViewModel() {
     fun signIn() {
         isEmailCorrect.value = isCorrectEmail(userEmail.value ?: "")
         isPasswordCorrect.value = isCorrectPassword(userPassword.value ?: "")
-        if (isEmailCorrect.value == true && isPasswordCorrect.value == true) {
-            TODO()
-        }
         if (isEmailCorrect.value == true
             && isPasswordCorrect.value == true
         ) {
-            TODO()
+            val email = userEmail.value ?: ""
+            val password = userPassword.value ?: ""
+            requestUserData(email, password)
         }
+    }
+
+    private fun requestUserData(email: String, password: String) {
+
     }
 
     fun signUp() {
@@ -53,12 +52,17 @@ class LoginViewModel : ViewModel() {
             && isPasswordCorrect.value == true
             && isRepeatPasswordCorrect.value == true
         ) {
-            TODO()
+            val email = userEmail.value ?: ""
+            val password = userPassword.value ?: ""
+            registerUser(email, password)
         }
     }
 
+    // Makes no sense, but I can't just user previous function. Looking messy.
+    private fun registerUser(email: String, password: String) = requestUserData(email, password)
+
     companion object {
-        val SIGN_IN = 0
-        val SIGN_UP = 1
+        val SIGN_IN = 10
+        val SIGN_UP = 11
     }
 }

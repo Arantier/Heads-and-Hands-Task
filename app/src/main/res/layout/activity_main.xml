@@ -8,7 +8,7 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/textPasswordHint"
+        android:id="@+id/labelPopup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/password_hint_margin_horizontal"
@@ -19,7 +19,6 @@
         android:paddingTop="@dimen/password_hint_padding_vertical"
         android:paddingEnd="@dimen/password_hint_padding_horizontal"
         android:paddingBottom="@dimen/password_hint_padding_vertical"
-        android:text="@string/msg_password_hint"
         android:textAlignment="center"
         android:textColor="@color/textColor"
         android:translationY="@dimen/password_hint_initial_coordinateY"
