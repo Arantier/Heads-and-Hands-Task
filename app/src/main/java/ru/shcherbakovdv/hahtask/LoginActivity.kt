@@ -11,6 +11,7 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_label_popup.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
     private var repeatPasswordTransition = 0f
 
+    // Represents horizontal shake animation for any view
     private fun shakeView(view: View) {
         SpringAnimation(view, DynamicAnimation.TRANSLATION_X, 0f).apply {
             setStartValue(-32f)
@@ -52,19 +54,39 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLabelPopup(message: String, colorId: Int? = null) {
+    private fun showLabelPopupMessage(message: String) {
         labelPopup.apply {
-            text = message
-            colorId?.let(this::setTextColor)
+            text.text = message
+            icon.visibility = View.GONE
+            text.setTextColor(resources.getColor(R.color.textColor))
             animate()
                 .setStartDelay(0)
                 .translationY(toolbar.height.toFloat())
                 .withEndAction {
                     animate()
                         .setStartDelay(3000)
-                        .translationY(resources.getDimension(R.dimen.password_hint_initial_coordinateY))
+                        .translationY(resources.getDimension(R.dimen.label_popup_initial_coordinateY))
                         .withEndAction {
-                            text = ""
+                            text.text = ""
+                        }
+                }
+        }
+    }
+
+    private fun showLabelPopupError(message: String) {
+        labelPopup.apply {
+            text.text = message
+            icon.visibility = View.VISIBLE
+            text.setTextColor(resources.getColor(R.color.design_default_color_error))
+            animate()
+                .setStartDelay(0)
+                .translationY(toolbar.height.toFloat())
+                .withEndAction {
+                    animate()
+                        .setStartDelay(3000)
+                        .translationY(resources.getDimension(R.dimen.label_popup_initial_coordinateY))
+                        .withEndAction {
+                            text.text = ""
                         }
                 }
         }
@@ -80,12 +102,9 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.labelNotifications.observe(this) {
             if (it.status == Status.ERROR) {
-                showLabelPopup(
-                    it.data ?: getString(R.string.msg_uknown_error),
-                    resources.getColor(R.color.design_default_color_error)
-                )
+                showLabelPopupError(it.message ?: getString(R.string.msg_uknown_error))
             } else {
-                showLabelPopup(it.data ?: getString(R.string.msg_unexpected_outcome))
+                showLabelPopupMessage(it.data ?: getString(R.string.msg_unexpected_outcome))
             }
         }
 
@@ -118,7 +137,8 @@ class LoginActivity : AppCompatActivity() {
 
             // Animation of slider with password requirements
             setEndIconOnClickListener {
-                viewModel.labelNotifications.value = Resource.success(getString(R.string.msg_password_hint))
+                viewModel.labelNotifications.value =
+                    Resource.success(getString(R.string.msg_password_hint))
             }
         }
 

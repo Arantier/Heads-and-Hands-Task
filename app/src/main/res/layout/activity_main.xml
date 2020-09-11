@@ -7,24 +7,18 @@
     android:background="@color/colorPrimary"
     tools:context=".LoginActivity">
 
-    <TextView
+    <include
         android:id="@+id/labelPopup"
-        android:layout_width="match_parent"
+        layout="@layout/include_label_popup"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/password_hint_margin_horizontal"
-        android:layout_marginEnd="@dimen/password_hint_margin_horizontal"
-        android:background="@drawable/bkg_password_hint"
-        android:elevation="@dimen/toolbar_shadow_elevation"
-        android:paddingStart="@dimen/password_hint_padding_horizontal"
-        android:paddingTop="@dimen/password_hint_padding_vertical"
-        android:paddingEnd="@dimen/password_hint_padding_horizontal"
-        android:paddingBottom="@dimen/password_hint_padding_vertical"
-        android:textAlignment="center"
-        android:textColor="@color/textColor"
-        android:translationY="@dimen/password_hint_initial_coordinateY"
+        android:layout_marginStart="@dimen/label_popup_margin_horizontal"
+        android:layout_marginEnd="@dimen/label_popup_margin_horizontal"
+        android:translationY="@dimen/label_popup_initial_coordinateY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -83,11 +77,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextPassword"
         style="@style/InputStyle"
-        android:background="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/login_elements_margin_horizontal"
         android:layout_marginTop="@dimen/input_fields_padding_inbetween"
+        android:background="@color/colorPrimary"
         android:hint="@string/title_password_placeholder"
         app:endIconDrawable="@drawable/ic_question"
         app:endIconMode="custom"
