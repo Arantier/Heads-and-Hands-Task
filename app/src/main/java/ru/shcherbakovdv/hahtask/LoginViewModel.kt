@@ -1,11 +1,18 @@
 package ru.shcherbakovdv.hahtask
 
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     var mode = SIGN_IN
+    val context: Context = getApplication<Application>().applicationContext
+
     val userEmail: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val userPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val userRepeatPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
@@ -14,7 +21,13 @@ class LoginViewModel : ViewModel() {
     val isPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
     val isRepeatPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
 
-    val labelNotifications: MutableLiveData<Resource<String>> by lazy { MutableLiveData(Resource.success(""))}
+    val labelNotifications: MutableLiveData<Resource<String>> by lazy {
+        MutableLiveData(
+            Resource.success(
+                ""
+            )
+        )
+    }
 
     // This is famous expression from https://emailregex.com which should "99.99% works"
     private fun isCorrectEmail(email: String) =
@@ -27,7 +40,15 @@ class LoginViewModel : ViewModel() {
                 && password.length >= 6
                 && password.contains("""\d""".toRegex())
 
-    fun signIn() {
+    fun processUserCredentials() {
+        if (mode == SIGN_IN) {
+            signIn()
+        } else {
+            signUp()
+        }
+    }
+
+    private fun signIn() {
         isEmailCorrect.value = isCorrectEmail(userEmail.value ?: "")
         isPasswordCorrect.value = isCorrectPassword(userPassword.value ?: "")
         if (isEmailCorrect.value == true
@@ -43,7 +64,7 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    fun signUp() {
+    private fun signUp() {
         isEmailCorrect.value = isCorrectEmail(userEmail.value ?: "")
         isPasswordCorrect.value = isCorrectPassword(userPassword.value ?: "")
         isRepeatPasswordCorrect.value = userPassword.value.equals(userRepeatPassword.value)
@@ -56,6 +77,11 @@ class LoginViewModel : ViewModel() {
             val password = userPassword.value ?: ""
             registerUser(email, password)
         }
+    }
+
+    fun showPasswordHint() {
+        labelNotifications.value =
+            Resource.success(context.getString(R.string.msg_password_hint))
     }
 
     // Makes no sense, but I can't just user previous function. Looking messy.

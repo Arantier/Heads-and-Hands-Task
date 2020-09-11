@@ -136,10 +136,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // Animation of slider with password requirements
-            setEndIconOnClickListener {
-                viewModel.labelNotifications.value =
-                    Resource.success(getString(R.string.msg_password_hint))
-            }
+            setEndIconOnClickListener { viewModel.showPasswordHint() }
         }
 
         editTextRepeatPassword.apply {
@@ -168,11 +165,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         buttonLogin.setOnClickListener {
-            if (viewModel.mode == LoginViewModel.SIGN_IN) {
-                viewModel.signIn()
-            } else {
-                viewModel.signUp()
-            }
+            viewModel.processUserCredentials()
         }
     }
 }
