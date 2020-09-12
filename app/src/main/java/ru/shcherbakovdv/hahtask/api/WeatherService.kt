@@ -15,7 +15,7 @@ interface WeatherService {
 
         fun create(): WeatherService = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(Weather.adapter))
             .build()
             .create(WeatherService::class.java)
     }

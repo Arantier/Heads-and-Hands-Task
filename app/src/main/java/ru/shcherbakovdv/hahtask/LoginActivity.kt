@@ -107,6 +107,9 @@ class LoginActivity : AppCompatActivity() {
                 showLabelPopupMessage(it.data ?: getString(R.string.msg_unexpected_outcome))
             }
         }
+        viewModel.requestResults.observe(this) { weather ->
+            TODO()
+        }
 
         editTextEmail.apply {
             editText?.doOnTextChanged { text, _, _, _ ->

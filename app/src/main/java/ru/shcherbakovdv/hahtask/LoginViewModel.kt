@@ -7,26 +7,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.shcherbakovdv.hahtask.data.LoginRepository
+import java.net.UnknownHostException
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     var mode = SIGN_IN
     val context: Context = getApplication<Application>().applicationContext
+    val loginRepository = LoginRepository.getInstance()
 
     val userEmail: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    val userPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    val userRepeatPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-
     val isEmailCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
+    val userPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val isPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
+    val userRepeatPassword: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     val isRepeatPasswordCorrect: MutableLiveData<Boolean> by lazy { MutableLiveData(true) }
-
     val labelNotifications: MutableLiveData<Resource<String>> by lazy {
-        MutableLiveData(
-            Resource.success(
-                ""
-            )
-        )
+        MutableLiveData<Resource<String>>()
+    }
+    val requestResults: MutableLiveData<Resource<Weather>> by lazy {
+        MutableLiveData<Resource<Weather>>()
     }
 
     // This is famous expression from https://emailregex.com which should "99.99% works"
@@ -41,11 +42,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 && password.contains("""\d""".toRegex())
 
     fun processUserCredentials() {
-        if (mode == SIGN_IN) {
-            signIn()
-        } else {
-            signUp()
-        }
+        requestUserData("", "")
+//        if (mode == SIGN_IN) {
+//            signIn()
+//        } else {
+//            signUp()
+//        }
     }
 
     private fun signIn() {
@@ -61,7 +63,32 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun requestUserData(email: String, password: String) {
-
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                loginRepository.authenticateUser(email, password)
+                    .let {
+                        withContext(Dispatchers.Main) {
+                            requestResults.value = Resource.success(it)
+                        }
+                    }
+            } catch (e: UnknownHostException) {
+                withContext(Dispatchers.Main) {
+                    labelNotifications.value =
+                        Resource.error(
+                            context.getString(R.string.msg_no_internet),
+                            null
+                        )
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    labelNotifications.value =
+                        Resource.error(
+                            context.getString(R.string.msg_uknown_error),
+                            null
+                        )
+                }
+            }
+        }
     }
 
     private fun signUp() {
