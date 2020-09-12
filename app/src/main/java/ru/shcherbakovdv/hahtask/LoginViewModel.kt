@@ -42,12 +42,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 && password.contains("""\d""".toRegex())
 
     fun processUserCredentials() {
-        requestUserData("", "")
-//        if (mode == SIGN_IN) {
-//            signIn()
-//        } else {
-//            signUp()
-//        }
+        if (mode == SIGN_IN) {
+            signIn()
+        } else {
+            signUp()
+        }
     }
 
     private fun signIn() {

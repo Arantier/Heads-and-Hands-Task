@@ -9,12 +9,12 @@ import java.lang.reflect.Type
 // Of course in real implementation it would be user's data. But because now I have to return
 // weather data after "authentification" this class returns weather data
 data class Weather constructor(
+    val weatherId: Int,
     val temperature: Float,
     val pressure: Float,
     val humidity: Float,
     val windSpeed: Float,
-    val windDirection: Int,
-    val clouds: Int
+    val windDirection: Int
 ) {
     companion object {
         val adapter = GsonBuilder()
@@ -26,12 +26,12 @@ data class Weather constructor(
                 ): Weather =
                     json?.asJsonObject?.let {
                         Weather(
+                            it["weather"].asJsonArray[0].asJsonObject["id"].asInt,
                             it["main"].asJsonObject["temp"].asFloat,
                             it["main"].asJsonObject["pressure"].asFloat,
                             it["main"].asJsonObject["humidity"].asFloat,
                             it["wind"].asJsonObject["speed"].asFloat,
-                            it["wind"].asJsonObject["deg"].asInt,
-                            it["clouds"].asJsonObject["all"].asInt
+                            it["wind"].asJsonObject["deg"].asInt
                         )
                     } ?: throw NullPointerException()
 

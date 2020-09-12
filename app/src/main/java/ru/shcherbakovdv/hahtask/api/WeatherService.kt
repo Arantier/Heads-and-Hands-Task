@@ -11,7 +11,7 @@ interface WeatherService {
     suspend fun getWeather(): Weather
 
     companion object {
-        private const val BASE_URL = "https://samples.openweathermap.org/"
+        private const val BASE_URL = "https://api.openweathermap.org/"
 
         fun create(): WeatherService = Retrofit.Builder()
             .baseUrl(BASE_URL)

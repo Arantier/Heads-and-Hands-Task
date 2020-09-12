@@ -10,6 +10,7 @@ import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.lifecycle.observe
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_label_popup.*
 
@@ -108,7 +109,56 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         viewModel.requestResults.observe(this) { weather ->
-            TODO()
+            weather.data?.apply {
+                val weatherIcon = when (weatherId) {
+                    in 200..232 -> "⛈\n️"
+                    in 300..321 -> "\uD83C\uDF27️ "
+                    in 500..504 -> "\uD83C\uDF27️ "
+                    511 -> "\uD83C\uDF28️"
+                    in 600..622 -> "\uD83C\uDF28️"
+                    in 701..771 -> "\uD83C\uDF2B️"
+                    781 -> "\uD83C\uDF2A️"
+                    800 -> "☀️"
+                    801 -> "\uD83C\uDF24️"
+                    802 -> "⛅"
+                    803 -> "\uD83C\uDF25️"
+                    804 -> "☁️"
+                    else -> "❓"
+                }
+                var direction = when (windDirection) {
+                    in 0..45 -> "N"
+                    in 134..225 -> "S"
+                    in 316..360 -> "N"
+                    else -> ""
+                } + when (windDirection) {
+                    in 46..315 -> "E"
+                    in 226..135 -> "W"
+                    else -> ""
+                }
+                direction = when (direction) {
+                    "N" -> "\u2b06"
+                    "NW" -> "\u2196"
+                    "NE" -> "\u2197"
+                    "S" -> "\u2b07"
+                    "SW" -> "\u2199"
+                    "SE" -> "\u2198"
+                    "W" -> "\u2b05"
+                    "E" -> "\u27a1"
+                    else -> ""
+                } + "\ufe0f"
+                Snackbar.make(
+                    layout,
+                    getString(
+                        R.string.msg_weather_report,
+                        weatherIcon,
+                        temperature - 273.15,
+                        pressure,
+                        humidity,
+                        direction,
+                        windSpeed
+                    ), Snackbar.LENGTH_LONG
+                ).show()
+            }
         }
 
         editTextEmail.apply {
