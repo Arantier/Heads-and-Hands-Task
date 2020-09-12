@@ -1,1 +1,1 @@
-![demonstration gif](https://imgur.com/H8BR3mH)
+![demonstration gif](/Screenshot_1599914069.png)
