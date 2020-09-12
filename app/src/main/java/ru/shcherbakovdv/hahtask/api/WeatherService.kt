@@ -3,7 +3,7 @@ package ru.shcherbakovdv.hahtask.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import ru.shcherbakovdv.hahtask.Weather
+import ru.shcherbakovdv.hahtask.data.Weather
 
 interface WeatherService {
 

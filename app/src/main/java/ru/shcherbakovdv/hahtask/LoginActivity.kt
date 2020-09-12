@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_label_popup.*
+import ru.shcherbakovdv.hahtask.data.Status
 
 
 class LoginActivity : AppCompatActivity() {
@@ -132,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                     else -> ""
                 } + when (windDirection) {
                     in 46..315 -> "E"
-                    in 226..135 -> "W"
+                    in 135..226 -> "W"
                     else -> ""
                 }
                 direction = when (direction) {

@@ -1,6 +1,5 @@
 package ru.shcherbakovdv.hahtask.data
 
-import ru.shcherbakovdv.hahtask.Weather
 import ru.shcherbakovdv.hahtask.api.WeatherService
 
 class LoginRepository private constructor() {

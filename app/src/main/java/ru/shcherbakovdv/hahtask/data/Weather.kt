@@ -1,4 +1,4 @@
-package ru.shcherbakovdv.hahtask
+package ru.shcherbakovdv.hahtask.data
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext

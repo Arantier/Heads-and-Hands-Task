@@ -9,6 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.shcherbakovdv.hahtask.data.LoginRepository
+import ru.shcherbakovdv.hahtask.data.Resource
+import ru.shcherbakovdv.hahtask.data.Weather
 import java.net.UnknownHostException
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {

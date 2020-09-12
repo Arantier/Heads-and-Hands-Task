@@ -1,4 +1,4 @@
-package ru.shcherbakovdv.hahtask
+package ru.shcherbakovdv.hahtask.data
 
 abstract class Status {
     abstract val value: Int
