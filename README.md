@@ -1,1 +1,1 @@
-![demonstration gif](https://imgur.com/a/mUsCIAO)
+![demonstration gif](/demonstration.gif)
