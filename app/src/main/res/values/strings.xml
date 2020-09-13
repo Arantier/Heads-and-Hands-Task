@@ -15,4 +15,6 @@
     <string name="msg_unexpected_outcome">Если вы видите это, значит наш разработчик где-то накосячил! Обратитесь в поддержку.</string>
     <string name="msg_no_internet">Не удалось связаться с сайтом. Проверьте ваше подключение к Интернету!</string>
     <string name="msg_weather_report">Сейчас на улице: %s, \uD83C\uDF21: %.2f °C,\n \u23F2️: %.2f \uD83D\uDCA6: %.2f \uD83D\uDCA8: %s %.2f"</string>
+    <string name="msg_loading">Идёт загрузка...</string>
+    <string name="msg_success">Успешно!</string>
 </resources>

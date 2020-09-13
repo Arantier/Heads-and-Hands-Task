@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_label_popup.*
+import ru.shcherbakovdv.hahtask.data.Resource
 import ru.shcherbakovdv.hahtask.data.Status
 
 
@@ -20,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
     private var repeatPasswordTransition = 0f
+    private var isLabelVisible = false
 
     // Represents horizontal shake animation for any view
     private fun shakeView(view: View) {
@@ -56,39 +58,39 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLabelPopupMessage(message: String) {
+    private fun showLabelMessage(data: Resource<String>) {
         labelPopup.apply {
-            text.text = message
-            icon.visibility = View.GONE
-            text.setTextColor(resources.getColor(R.color.textColor))
-            animate()
-                .setStartDelay(0)
-                .translationY(toolbar.height.toFloat())
-                .withEndAction {
-                    animate()
-                        .setStartDelay(3000)
-                        .translationY(resources.getDimension(R.dimen.label_popup_initial_coordinateY))
-                        .withEndAction {
-                            text.text = ""
-                        }
+            when (data.status) {
+                Status.SUCCESS -> {
+                    message.text = data.data
+                    message.setTextColor(resources.getColor(R.color.textColor))
+                    errorIcon.visibility = View.GONE
+                    progressBar.visibility = View.GONE
                 }
-        }
-    }
-
-    private fun showLabelPopupError(message: String) {
-        labelPopup.apply {
-            text.text = message
-            icon.visibility = View.VISIBLE
-            text.setTextColor(resources.getColor(R.color.design_default_color_error))
-            animate()
+                Status.ERROR -> {
+                    message.text = data.message
+                    message.setTextColor(resources.getColor(R.color.design_default_color_error))
+                    errorIcon.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                }
+                Status.LOADING -> {
+                    message.text = data.data ?: getString(R.string.msg_loading)
+                    message.setTextColor(resources.getColor(R.color.textColor))
+                    errorIcon.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
+                }
+            }
+            if (!isLabelVisible) animate()
                 .setStartDelay(0)
                 .translationY(toolbar.height.toFloat())
                 .withEndAction {
-                    animate()
+                    // I don't want the loading message to expire. Although, it has less priority,
+                    // than new message.
+                    if (data.status != Status.LOADING) animate()
                         .setStartDelay(3000)
                         .translationY(resources.getDimension(R.dimen.label_popup_initial_coordinateY))
                         .withEndAction {
-                            text.text = ""
+                            message.text = ""
                         }
                 }
         }
@@ -102,13 +104,7 @@ class LoginActivity : AppCompatActivity() {
                 editTextPassword.measuredHeight + editTextPassword.marginTop + .0f
         }
 
-        viewModel.labelNotifications.observe(this) {
-            if (it.status == Status.ERROR) {
-                showLabelPopupError(it.message ?: getString(R.string.msg_uknown_error))
-            } else {
-                showLabelPopupMessage(it.data ?: getString(R.string.msg_unexpected_outcome))
-            }
-        }
+        viewModel.labelNotifications.observe(this, this::showLabelMessage)
         viewModel.requestResults.observe(this) { weather ->
             weather.data?.apply {
                 val weatherIcon = when (weatherId) {

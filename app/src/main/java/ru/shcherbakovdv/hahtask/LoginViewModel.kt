@@ -64,12 +64,14 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun requestUserData(email: String, password: String) {
+        labelNotifications.value = Resource.loading(context.getString(R.string.msg_loading))
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 loginRepository.authenticateUser(email, password)
                     .let {
                         withContext(Dispatchers.Main) {
                             requestResults.value = Resource.success(it)
+                            labelNotifications.value = Resource.success(context.getString(R.string.msg_success))
                         }
                     }
             } catch (e: UnknownHostException) {
